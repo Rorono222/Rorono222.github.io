@@ -3,87 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人投资组合追踪器 - 项目详情</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>个人投资组合追踪器</title>
+    <link rel="stylesheet" href="portfolio-tracker.css">
 </head>
-<body id="portfolio-tracker-page">
+<body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="index.html#home">首页</a></li>
-                <li><a href="index.html#about">关于我</a></li>
-                <li><a href="index.html#portfolio">作品集</a></li>
-                <li><a href="index.html#contact">联系方式</a></li>
-            </ul>
-        </nav>
+        <h1>个人投资组合追踪器</h1>
     </header>
 
     <main>
-        <section class="hero project-hero">
-             <div class="container">
-                <h1>个人投资组合追踪器</h1>
-                <p>一个全面追踪和分析个人投资组合的网络应用</p>
-             </div>
+        <section id="portfolio-list">
+            <h2>我的持仓</h2>
+            <!-- 持仓列表将在这里生成 -->
+            <div id="holdings-container">
+                <!-- 数据将由 JavaScript 填充 -->
+            </div>
         </section>
 
-        <section>
-            <div class="container">
-                <section>
-                    <h2>项目概述</h2>
-                    <p>
-                        个人投资组合追踪器是一个复杂的网络应用程序，旨在帮助用户实时监控和分析他们的投资组合。
-                    </p>
-                    <p>
-                        该工具采用现代网络技术构建，为跟踪股票、分析表现指标以及做出明智的投资决策提供无缝体验。
-                    </p>
-                </section>
-
-                <section>
-                    <h2>主要功能</h2>
-                    <ul>
-                        <li>使用 Chart.js 进行实时股票数据可视化</li>
-                        <li>投资组合表现追踪和分析</li>
-                        <li>投资策略洞察和建议</li>
-                        <li>可定制的仪表板，支持多种视图</li>
-                        <li>历史表现对比</li>
-                        <li>风险评估和投资组合分散度分析</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2>技术实现</h2>
-                    <p>
-                        该应用程序使用现代网络技术构建，专注于性能、用户体验和数据准确性。
-                    </p>
-                    <p>
-                        前端使用 HTML5、CSS3 和 JavaScript 开发，同时利用各种金融 API 获取实时数据。
-                    </p>
-                </section>
-
-                <section>
-                    <h2>未来增强</h2>
-                    <ul class="future-enhancements-list">
-                        <li>整合加密货币市场</li>
-                        <li>高级投资组合优化算法</li>
-                        <li>自动化交易策略建议</li>
-                        <li>移动应用程序开发</li>
-                        <li>社交分享和社区功能</li>
-                    </ul>
-                </section>
-
-                <div style="text-align: center; margin-top: 40px;">
-                    <a href="index.html#portfolio" class="btn">← 返回作品集</a>
-                </div>
+        <section id="portfolio-summary">
+            <h2>投资组合总览</h2>
+            <!-- 总览信息将在这里显示 -->
+            <div id="summary-container">
+                <!-- 数据将由 JavaScript 填充 -->
             </div>
         </section>
     </main>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2024 WYH. All rights reserved.</p>
-        </div>
+        <p>&copy; 2024 WYH. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="portfolio-tracker.js"></script>
 </body>
 </html> 
