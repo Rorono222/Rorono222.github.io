@@ -125,13 +125,39 @@ h3 {
     padding-left: 0;
 }
 
-/* 关于我部分 */
+/* About Me Section */
 .about-content {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 30px;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children horizontally within about-content on smaller screens */
+    gap: 30px; /* Gap between main blocks on smaller screens */
     margin-top: 20px;
+}
+
+.avatar-info-container {
+    display: flex;
+    flex-direction: column; /* Stack avatar and info vertically on smaller screens */
+    align-items: center; /* Center avatar and info horizontally within the container on smaller screens */
+    gap: 15px; /* Adjusted gap for smaller screens */
+}
+
+.avatar-placeholder {
+    width: 150px;
+    height: 150px;
+    background-color: #ddd;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('avatar.png'); /* 设置头像图片 */
+    flex-shrink: 0;
+}
+
+.personal-info {
+    font-size: 1.1em;
+    font-weight: 400;
+    color: #0A2463;
+    text-align: center; /* Center text on smaller screens */
 }
 
 .about-text {
@@ -141,70 +167,110 @@ h3 {
     padding-left: 0;
     margin-left: 0 !important;
     flex-grow: 1;
+    width: 100%; /* Ensure about-text takes full width */
+    margin-top: 0;
 }
 
-.about-text p {
-    margin-bottom: 15px;
-    font-size: 1.1em; /* 调整字体大小 */
-}
-
+/* --- Styling for lists within about-text to use default black dots and align --- */
 .about-text ul {
-    list-style: none; /* 移除默认圆点 */
-    padding: 0;
-    margin-bottom: 20px;
+    list-style: disc; /* 使用标准的黑色圆点 */
+    padding: 0 0 0 20px; /* 增加左内边距为圆点留空间，移除其他内边距 */
+    margin: 0 0 20px 0; /* 移除所有外边距，只保留底部外边距 */
+    text-align: left; /* 确保列表文本左对齐 */
 }
 
 .about-text li {
-    margin-bottom: 8px;
-    position: relative; /* 添加相对定位 */
-    padding-left: 20px; /* 为图标留空间 */
-    font-size: 1.1em; /* 调整字体大小 */
+    margin-bottom: 8px; /* 保持列表项之间的间距 */
+    /* 移除所有可能干扰默认圆点显示的样式 */
+    position: initial;
+    padding-left: 0;
+    color: inherit; /* 使用继承的文本颜色 */
     display: list-item;
-    align-items: auto;
-    justify-content: auto;
-    flex-direction: row;
+    align-items: initial;
+    justify-content: initial;
+    flex-direction: initial;
+    text-align: left;
 }
 
-/* 列表项蓝色圆点图标 */
-.about-text li::before {
-    content: '\2022'; /* Unicode 圆点 */
-    color: #0A2463; /* 深海宝蓝色 */
+/* 确保不使用伪元素来生成或修改圆点 */
+.about-text li::before,
+.about-text li::after {
+    content: none !important; /* 强制移除伪元素内容 */
+    position: initial !important;
+    left: initial !important;
+    top: initial !important;
+    transform: none !important;
+}
+/* --- End Styling for lists within about-text --- */
+
+/* Universal list item styling for consistency (for other sections in main) */
+/* Ensure these rules do NOT target lists within .about-text */
+main section:not(.about) ul {
+    list-style: none; /* Remove default list style for other sections */
+    padding: 0;
+    margin-bottom: 20px;
+    margin-left: 6em; /* Left margin for other list blocks */
+}
+
+main section:not(.about) ul li {
+    margin-bottom: 8px;
+    position: relative; /* Add relative positioning */
+    padding-left: 20px; /* Space for the icon */
+    font-size: 1.1em;
+    display: list-item;
+    color: #333; /* Ensure text color is readable */
+}
+
+main section:not(.about) ul li::before { /* Apply blue dot to lists within main sections excluding about */
+    content: '\2022'; /* Blue dot icon */
+    color: #0A2463;
     font-weight: bold;
     display: inline-block;
     width: 1em;
-    position: absolute; /* 绝对定位 */
-    left: 0; /* 定位到左侧 */
-    top: 50%; /* 垂直居中 */
-    transform: translateY(-50%); /* 垂直居中微调 */
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
     text-align: center;
 }
 
-/* 移除原有的伪元素样式 */
+/* Specific styling for Future Enhancements list (additional margin) */
+/* Ensure this rule does NOT target lists within .about-text */
+main section:not(.about) ul.future-enhancements-list {
+     margin-left: calc(6em + 3em); /* Base margin + additional margin */
+}
+
+/* Ensure button styles are applied correctly */
+.btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white !important; /* Use !important to ensure color is applied */
+    text-decoration: none;
+    border-radius: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none; /* Ensure no default button border */
+    cursor: pointer; /* Indicate it's clickable */
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Remove original specific list pseudo-element styles */
+/* These might be redundant after the above changes, but keeping for safety */
 .about-text ul:nth-of-type(1) li::after,
 .about-text ul:nth-of-type(2) li::after {
     content: none;
 }
 
-/* 头像占位符样式 */
-.avatar-placeholder {
-    width: 150px;
-    height: 150px;
-    background-color: #ddd;
-    border-radius: 50%;
-    margin-bottom: 20px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url('avatar.png'); /* 设置头像图片 */
-}
-
 /* 作品集部分 */
 .portfolio-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    margin-top: 20px;
-    text-align: left;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .portfolio-grid p {
@@ -214,18 +280,59 @@ h3 {
 }
 
 .portfolio-item {
-    background: #f8f8f8;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: none;
-    transition: none;
-    border: 1px solid #D3E0F3; /* 增加细微边框 */
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .portfolio-item:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: #ccc;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-content h3 {
+    color: #fff;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.portfolio-description {
+    color: #e0e0e0;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.portfolio-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.tech-tag {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.portfolio-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white; /* Ensure text is visible */
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* 联系方式部分 */
@@ -303,4 +410,76 @@ footer {
         width: 100px;
         height: 100px;
     }
+}
+
+/* Adjust layout for larger screens */
+@media (min-width: 769px) {
+    .about-content {
+        flex-direction: column; /* Still stack avatar/info block and text block vertically */
+        align-items: flex-start; /* Align children (avatar-info-container, about-text) to the start */
+        gap: 40px; /* Increase gap between main blocks */
+    }
+
+    .avatar-info-container {
+        flex-direction: row; /* Arrange avatar and info horizontally */
+        align-items: center; /* Align items vertically in the row */
+        gap: 30px; /* Space between avatar and info */
+    }
+
+    .personal-info {
+        text-align: left; /* Align text to the left */
+    }
+    
+    .about-text {
+         margin-top: 0; /* Ensure no extra top margin */
+    }
+}
+
+/* Project Details Page Styles */
+
+/* Remove all specific styles for project details page */
+
+/* Project Details Page Specific Adjustments */
+/* Center text in Project Overview and Technical Implementation paragraphs */
+#portfolio-tracker-page section p {
+    text-align: center;
+}
+
+/* Adjust alignment for list items if needed after centering text */
+#portfolio-tracker-page main ul li {
+    text-align: left; /* Keep list item text left-aligned if parent is centered */
+}
+
+/* Universal list item styling for consistency */
+main ul {
+    list-style: none; /* Remove default list style */
+    padding: 0;
+    margin-bottom: 20px;
+    margin-left: 6em; /* Increase left margin to move the list block further to the right */
+}
+
+main ul li {
+    margin-bottom: 8px;
+    position: relative; /* Add relative positioning */
+    padding-left: 20px; /* Space for the icon */
+    font-size: 1.1em;
+    display: list-item;
+}
+
+main ul li::before { /* Apply blue dot to lists within sections and main */
+    content: '\2022'; /* Blue dot icon */
+    color: #0A2463;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+/* Specific styling for Future Enhancements list */
+.future-enhancements-list {
+    margin-left: 3em; /* Add additional left margin */
 } 
