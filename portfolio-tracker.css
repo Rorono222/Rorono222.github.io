@@ -203,4 +203,22 @@ footer {
 #holdings-container td:nth-child(6)  /* Gain/Loss */
 {
     text-align: right;
+}
+
+/* Styles for the back to home button */
+.btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, #6e8efb, #a777e3); /* The blue/purple gradient */
+    color: white !important; /* Use !important to ensure color is applied */
+    text-decoration: none;
+    border-radius: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none; /* Ensure no default button border */
+    cursor: pointer; /* Indicate it's clickable */
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 } 

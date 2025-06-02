@@ -30,6 +30,9 @@ header {
     width: 100%;
     top: 0;
     z-index: 1000;
+    padding-top: 30px; /* Increased padding-top */
+    padding-bottom: 30px; /* Increased padding-bottom */
+    text-align: center; /* Center header content */
 }
 
 nav ul {
@@ -293,6 +296,15 @@ main section:not(.about) ul.future-enhancements-list {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+.portfolio-content {
+    /* color: #fff; */
+    /* margin-bottom: 1rem; */ /* Adjusted in specific styles */
+    /* font-size: 1.5rem; */ /* Adjusted in specific styles */
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center items horizontally */
+}
+
 .portfolio-content h3 {
     color: #fff;
     margin-bottom: 1rem;
@@ -482,4 +494,21 @@ main ul li::before { /* Apply blue dot to lists within sections and main */
 /* Specific styling for Future Enhancements list */
 .future-enhancements-list {
     margin-left: 3em; /* Add additional left margin */
+}
+
+/* Styles for portfolio item title and subtitle */
+.portfolio-content .portfolio-main-title {
+    font-size: 1.8em; /* Larger font size for main title */
+    color: #0056b3; /* Match section title color or a slightly darker shade */
+    margin-top: 0;
+    margin-bottom: 5px; /* Small margin below main title */
+    font-weight: bold; /* Ensure main title is bold */
+}
+
+.portfolio-content .portfolio-subtitle {
+    font-size: 1em; /* Smaller font size for subtitle */
+    color: #555; /* Slightly lighter text color */
+    margin-top: 0;
+    margin-bottom: 15px; /* Margin below subtitle to separate from buttons */
+    font-weight: normal; /* Ensure subtitle is not bold */
 } 
