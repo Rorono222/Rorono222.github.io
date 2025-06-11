@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康追踪专家 - 项目介绍</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        * { /* 确保所有元素都使用 border-box 模型 */
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #E6F0FA; /* 浅蓝色背景，与主站内容区域even section一致 */
+        }
+        .project-description {
+            max-width: 800px;
+            margin: 40px auto; /* 顶部和底部留白 */
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .project-description h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            color: #0A2463;
+            margin-bottom: 20px;
+            text-align: center !important;
+        }
+        .project-description h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6em;
+            color: #0A2463;
+            margin: 20px 0 10px;
+            border-left: 5px solid #4CAF50;
+            padding-left: 10px;
+        }
+        .project-description p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .feature-list {
+            list-style-type: disc; /* 使用圆点列表 */
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        .feature-list li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .portfolio-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            .project-description {
+                margin: 20px auto;
+                padding: 15px;
+            }
+            .project-description h2 {
+                font-size: 1.8em;
+            }
+            .project-description h3 {
+                font-size: 1.3em;
+            }
+            .portfolio-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+            .portfolio-links .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="project-description">
+            <h2>健康追踪专家</h2>
+            
+            <h3>项目概述</h3>
+            <p>健康追踪专家是一个简单易用的健康评估工具，旨在帮助用户快速了解自身健康状况并获取个性化建议。</p>
+
+            <h3>主要功能</h3>
+            <ul class="feature-list">
+                <li>基础健康指标评估（BMI、步数、睡眠时间等）</li>
+                <li>个性化健康评分系统</li>
+                <li>智能建议生成</li>
+                <li>响应式设计，支持移动端访问</li>
+            </ul>
+
+            <h3>技术特点</h3>
+            <ul class="feature-list">
+                <li>使用HTML5语义化标签构建页面结构</li>
+                <li>采用CSS3实现响应式布局和现代化UI设计</li>
+                <li>使用原生JavaScript实现交互逻辑</li>
+                <li>本地存储数据，保护用户隐私</li>
+            </ul>
+
+            <h3>项目亮点</h3>
+            <ul class="feature-list">
+                <li>简单易用的界面设计</li>
+                <li>快速准确的健康评估</li>
+                <li>个性化的改善建议</li>
+                <li>完全免费，无需注册</li>
+            </ul>
+
+            <h3>使用说明</h3>
+            <p>用户只需输入基础健康指标，系统即可自动计算健康评分并生成个性化建议。所有数据均存储在本地，确保用户隐私安全。</p>
+
+            <div class="portfolio-links" style="margin-top: 30px;">
+                <a href="index.html" class="btn">访问网站</a>
+                <a href="../index.html#portfolio" class="btn">返回首页</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 WYH. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 

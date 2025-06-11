@@ -245,35 +245,37 @@ main section:not(.about) ul.future-enhancements-list {
 
 /* Ensure button styles are applied correctly */
 .btn {
-    display: inline-block;
-    padding: 0.8rem 1.5rem;
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
-    color: white !important; /* Use !important to ensure color is applied */
+    display: flex; /* 使用 flex 布局 */
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    padding: 1rem 2rem; /* 统一内边距 */
+    background: linear-gradient(135deg, #6e8efb, #a777e3) !important;
+    color: white !important;
     text-decoration: none;
     border-radius: 25px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: none; /* Ensure no default button border */
-    cursor: pointer; /* Indicate it's clickable */
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem; /* 统一字体大小 */
 }
 
 .btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Remove original specific list pseudo-element styles */
-/* These might be redundant after the above changes, but keeping for safety */
-.about-text ul:nth-of-type(1) li::after,
-.about-text ul:nth-of-type(2) li::after {
-    content: none;
+    background: linear-gradient(135deg, #a777e3, #6e8efb) !important;
 }
 
 /* 作品集部分 */
 .portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    display: flex; /* 改为弹性盒子布局 */
+    flex-direction: column; /* 强制垂直堆叠 */
+    /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */ /* 注释掉网格模板列 */
+    gap: 2rem; /* 保持项目间距 */
     margin-top: 2rem;
+}
+
+.portfolio-grid .portfolio-item {
+    margin-bottom: 2rem; /* 为垂直堆叠的项目添加底部间距 */
 }
 
 .portfolio-grid p {
@@ -335,16 +337,6 @@ main section:not(.about) ul.future-enhancements-list {
 .portfolio-links {
     display: flex;
     gap: 1rem;
-}
-
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white; /* Ensure text is visible */
-}
-
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
 }
 
 /* 联系方式部分 */

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康追踪专家</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        * { /* 确保所有元素都使用 border-box 模型 */
+            box-sizing: border-box;
+        }
+
+        /* HealthTrack Pro 页面特有样式 */
+        body {
+            background-color: #E6F0FA; /* 浅蓝色背景，与主站内容区域even section一致 */
+        }
+
+        .health-container {
+            max-width: 900px; /* 增加最大宽度 */
+            margin: 40px auto; /* 顶部和底部留白 */
+            padding: 30px; /* 增加内边距 */
+            background-color: white; 
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .health-form {
+            padding: 40px; /* 增加内边距 */
+            border-radius: 8px;
+            margin-bottom: 30px;
+            background-color: #f9f9f9;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd; 
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .results {
+            margin-top: 30px;
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: none; /* 默认隐藏 */
+        }
+        .score-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #0A2463; /* 使用主站的蓝色标题色 */
+        }
+        .suggestions {
+            margin-top: 20px;
+        }
+        .suggestions ul {
+            list-style-type: disc; /* 使用圆点列表 */
+            padding-left: 20px;
+        }
+        .suggestions li {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            color: #0A2463; /* 使用主站的蓝色标题色 */
+            margin-bottom: 30px;
+            text-align: center !important; /* 强制居中 */
+        }
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2em;
+            color: #0A2463;
+            margin-bottom: 25px;
+            text-align: center !important; /* 强制居中 */
+        }
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5em;
+            color: #0A2463;
+            margin-bottom: 15px;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 30px; /* Add some space above the buttons */
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            .health-container {
+                margin: 20px auto;
+                padding: 20px; /* 调整小屏幕内边距 */
+            }
+            .health-form, .results {
+                padding: 25px; /* 调整小屏幕内边距 */
+            }
+            .score {
+                font-size: 36px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.6em;
+            }
+            h3 {
+                font-size: 1.2em;
+            }
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            .button-group .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="health-container">
+            <h1>健康追踪专家</h1>
+            
+            <section class="health-form">
+                <h2>健康评估</h2>
+                <form id="healthForm">
+                    <div class="form-group">
+                        <label for="height">身高 (cm)</label>
+                        <input type="number" id="height" name="height" required min="100" max="250">
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">体重 (kg)</label>
+                        <input type="number" id="weight" name="weight" required min="30" max="200">
+                    </div>
+                    <div class="form-group">
+                        <label for="steps">每日步数</label>
+                        <input type="number" id="steps" name="steps" required min="0" max="50000">
+                    </div>
+                    <div class="form-group">
+                        <label for="sleep">睡眠时间 (小时)</label>
+                        <input type="number" id="sleep" name="sleep" required min="0" max="24" step="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="diet">饮食习惯</label>
+                        <select id="diet" name="diet" required>
+                            <option value="">请选择</option>
+                            <option value="healthy">健康均衡</option>
+                            <option value="normal">一般</option>
+                            <option value="unhealthy">不健康</option>
+                        </select>
+                    </div>
+                </form>
+            </section>
+
+            <section class="results">
+                <h2>评估结果</h2>
+                <div class="score-container">
+                    <h3>健康评分</h3>
+                    <div class="score">0</div>
+                </div>
+                <div class="suggestions">
+                    <h3>健康建议</h3>
+                    <ul id="suggestionsList"></ul>
+                </div>
+            </section>
+
+            <div class="button-group">
+                <button type="submit" class="btn" form="healthForm">开始评估</button>
+                <a href="../index.html" class="btn">返回首页</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 WYH. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const healthForm = document.getElementById('healthForm');
+            const resultsSection = document.querySelector('.results');
+            const scoreDisplay = document.querySelector('.score');
+            const suggestionsList = document.getElementById('suggestionsList');
+
+            // 移除原本的 form 提交事件，因为按钮移到了 form 外面
+            // healthForm.addEventListener('submit', function(e) {
+            //     e.preventDefault();
+                
+            //     // 获取表单数据
+            //     const formData = {
+            //         height: parseFloat(document.getElementById('height').value),
+            //         weight: parseFloat(document.getElementById('weight').value),
+            //         steps: parseInt(document.getElementById('steps').value),
+            //         sleep: parseFloat(document.getElementById('sleep').value),
+            //         diet: document.getElementById('diet').value
+            //     };
+
+            //     // 计算健康评分
+            //     const score = calculateHealthScore(formData);
+                
+            //     // 生成建议
+            //     const suggestions = generateSuggestions(formData, score);
+
+            //     // 显示结果
+            //     displayResults(score, suggestions);
+            // });
+
+            // 由于按钮移到了 form 外面，需要手动触发提交
+            const submitButton = document.querySelector('.button-group .btn[type="submit"]');
+            submitButton.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // 获取表单数据
+                const formData = {
+                    height: parseFloat(document.getElementById('height').value),
+                    weight: parseFloat(document.getElementById('weight').value),
+                    steps: parseInt(document.getElementById('steps').value),
+                    sleep: parseFloat(document.getElementById('sleep').value),
+                    diet: document.getElementById('diet').value
+                };
+
+                // 计算健康评分
+                const score = calculateHealthScore(formData);
+                
+                // 生成建议
+                const suggestions = generateSuggestions(formData, score);
+
+                // 显示结果
+                displayResults(score, suggestions);
+            });
+
+            function calculateHealthScore(data) {
+                let score = 100;
+                
+                // BMI计算
+                const bmi = data.weight / Math.pow(data.height / 100, 2);
+                if (bmi < 18.5 || bmi > 24.9) {
+                    score -= 10;
+                }
+
+                // 步数评分
+                if (data.steps < 5000) {
+                    score -= 15;
+                } else if (data.steps < 10000) {
+                    score -= 5;
+                }
+
+                // 睡眠评分
+                if (data.sleep < 6 || data.sleep > 9) {
+                    score -= 10;
+                }
+
+                // 饮食评分
+                if (data.diet === 'unhealthy') {
+                    score -= 15;
+                } else if (data.diet === 'normal') {
+                    score -= 5;
+                }
+
+                return Math.max(0, Math.min(100, score));
+            }
+
+            function generateSuggestions(data, score) {
+                const suggestions = [];
+
+                // BMI建议
+                const bmi = data.weight / Math.pow(data.height / 100, 2);
+                if (bmi < 18.5) {
+                    suggestions.push('您的BMI偏低，建议适当增加营养摄入');
+                }
+                if (bmi > 24.9) {
+                    suggestions.push('您的BMI偏高，建议控制饮食并增加运动');
+                }
+
+                // 步数建议
+                if (data.steps < 5000) {
+                    suggestions.push('每日步数不足，建议增加日常活动量，如快走或慢跑');
+                } else if (data.steps < 10000) {
+                    suggestions.push('每日步数尚可，但仍有提升空间，尝试达到10000步');
+                }
+
+                // 睡眠建议
+                if (data.sleep < 6) {
+                    suggestions.push('睡眠时间不足，建议保证7-9小时的充足睡眠');
+                } else if (data.sleep > 9) {
+                    suggestions.push('睡眠时间过长，也可能影响健康，请注意');
+                }
+
+                // 饮食建议
+                if (data.diet === 'unhealthy') {
+                    suggestions.push('饮食习惯不健康，建议多摄入蔬菜水果，减少高油高盐食物');
+                } else if (data.diet === 'normal') {
+                    suggestions.push('饮食习惯一般，可以尝试更均衡的膳食，如增加全谷物和蛋白质摄入');
+                }
+                
+                if (score < 60) {
+                    suggestions.push('您的健康评分较低，请认真对待以上建议，并考虑咨询专业医生或营养师');
+                } else if (score < 80) {
+                    suggestions.push('您的健康评分中等，还有改善空间，坚持健康生活习惯');
+                } else {
+                    suggestions.push('您的健康评分很高，请继续保持良好的生活习惯！');
+                }
+
+                return suggestions;
+            }
+
+            function displayResults(score, suggestions) {
+                scoreDisplay.textContent = score;
+                suggestionsList.innerHTML = '';
+                suggestions.forEach(s => {
+                    const li = document.createElement('li');
+                    li.textContent = s;
+                    suggestionsList.appendChild(li);
+                });
+                resultsSection.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html> 
