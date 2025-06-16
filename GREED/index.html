@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game Pro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>Snake Game Pro</h1>
+            <div class="score-container">
+                <span>分数: <span id="score">0</span></span>
+                <span>最高分: <span id="highScore">0</span></span>
+            </div>
+        </div>
+        
+        <canvas id="gameCanvas"></canvas>
+        
+        <div class="controls">
+            <button id="startBtn">开始游戏</button>
+            <button id="pauseBtn">暂停</button>
+            <div class="settings">
+                <select id="difficulty">
+                    <option value="easy">简单</option>
+                    <option value="medium">中等</option>
+                    <option value="hard">困难</option>
+                </select>
+                <button id="themeToggle">返回首页</button>
+            </div>
+        </div>
+        
+        <div class="mobile-controls">
+            <button id="upBtn">↑</button>
+            <div class="horizontal-controls">
+                <button id="leftBtn">←</button>
+                <button id="rightBtn">→</button>
+            </div>
+            <button id="downBtn">↓</button>
+        </div>
+    </div>
+    <div id="gameOverModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>游戏结束</h2>
+            <p id="finalScore">得分：0</p>
+            <button id="restartBtn">重新开始</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
