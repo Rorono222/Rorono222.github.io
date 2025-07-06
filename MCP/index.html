@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP模型交互演示平台</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .model-list { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; margin-top: 2.5rem; max-width: 1100px; margin-left: auto; margin-right: auto; }
+        .model-card { background: #fff; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 2rem; width: 320px; display: flex; flex-direction: column; align-items: center; height: 340px; box-sizing: border-box; }
+        .model-card h3 { color: #0A2463; margin-bottom: 1rem; }
+        .model-card p { color: #333; margin-bottom: 1.5rem; text-align: center; flex: 1; display: flex; align-items: center; }
+        .model-card .btn { margin-top: auto; }
+        .config-section { max-width: 400px; margin: 2rem auto; background: #E6F0FA; border-radius: 15px; padding: 2rem; }
+        .config-section label { display: block; margin-top: 1rem; margin-bottom: 0.5rem; color: #0A2463; }
+        .config-section input[type=range] { width: 100%; }
+        .config-section input[type=text], .config-section textarea { width: 100%; padding: 0.5rem; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 1rem; }
+        .ai-response { background: #fff; border-radius: 10px; padding: 1rem; margin-top: 1rem; color: #333; min-height: 40px; }
+        .config-btns { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
+        .hero { padding: 40px 0 60px 0 !important; }
+        #model-list-section h2 { margin-top: 60px; margin-bottom: 40px; }
+        @media (max-width: 1100px) {
+            .model-list { max-width: 100%; }
+        }
+        @media (max-width: 1000px) {
+            .model-list { flex-direction: column; align-items: center; }
+            .model-card { height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>MCP模型交互演示平台</h1>
+                <p>一个基于Model Context Protocol的AI模型交互演示平台。</p>
+            </div>
+        </section>
+        <section class="about">
+            <div class="container">
+                <h2>平台简介</h2>
+                <p style="text-align: center;">本平台用于演示AI模型的上下文协议配置与交互，后续将逐步开放更多功能。</p>
+            </div>
+        </section>
+        <div id="model-list-section">
+            <h2 style="margin-bottom: 0;">可用AI模型</h2>
+            <div class="model-list">
+                <div class="model-card">
+                    <h3>文本生成模型</h3>
+                    <p>基于百度智能云UNIT的中文对话AI，可用于闲聊、问答等场景。</p>
+                    <button class="btn" onclick="showConfig(0)">配置/体验</button>
+                </div>
+                <div class="model-card">
+                    <h3>图片识别模型</h3>
+                    <p>能够识别图片内容并输出标签，适用于图片分类、内容审核等。</p>
+                    <button class="btn" onclick="showConfig(1)">配置/体验</button>
+                </div>
+                <div class="model-card">
+                    <h3>情感分析模型</h3>
+                    <p>分析文本中的情感倾向，广泛应用于舆情分析、用户反馈等。</p>
+                    <button class="btn" onclick="showConfig(2)">配置/体验</button>
+                </div>
+            </div>
+        </div>
+        <div id="config-section" style="display:none;">
+            <div class="config-section">
+                <h3 id="config-model-name"></h3>
+                <p id="config-model-desc" style="margin-bottom: 1.5rem;"></p>
+                <form onsubmit="return handleSubmit(event)">
+                    <label for="temperature">温度（Temperature）</label>
+                    <input type="range" id="temperature" name="temperature" min="0" max="1" step="0.01" value="0.7">
+                    <span id="temp-value">0.7</span>
+                    <label for="maxlen">最大长度</label>
+                    <input type="number" id="maxlen" name="maxlen" min="10" max="512" value="128">
+                    <label for="user-input">输入内容</label>
+                    <textarea id="user-input" name="user-input" rows="3" placeholder="请输入内容..."></textarea>
+                    <div class="config-btns">
+                        <button type="submit" class="btn">提交</button>
+                        <button type="button" class="btn" onclick="backToList()">返回模型列表</button>
+                    </div>
+                </form>
+                <div class="ai-response" id="ai-response"></div>
+            </div>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 1rem; margin: 60px 0 30px 0;">
+            <a href="../index.html" class="btn">返回首页</a>
+            <a href="description.html" class="btn">项目介绍</a>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 WYH. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        const models = [
+            {
+                name: '文本生成模型',
+                desc: '基于百度智能云UNIT的中文对话AI，可用于闲聊、问答等场景。',
+                demo: async (input) => {
+                    try {
+                        const res = await fetch('/api/baidu-chat', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ input: input })
+                        });
+
+                        const data = await res.json();
+
+                        if (!res.ok) {
+                            return `【调用失败】 ${data.message || '未知错误'}`;
+                        }
+
+                        return data.reply;
+                    } catch (error) {
+                        return `【网络错误】无法连接到中转服务: ${error.message}`;
+                    }
+                }
+            },
+            {
+                name: '图片识别模型',
+                desc: '能够识别图片内容并输出标签，适用于图片分类、内容审核等。',
+                demo: input => `【模拟AI回复】图片内容分析结果：猫、沙发、阳光\n（此处展示图片识别效果）`
+            },
+            {
+                name: '情感分析模型',
+                desc: '分析文本中的情感倾向，广泛应用于舆情分析、用户反馈等。',
+                demo: input => `【模拟AI回复】情感分析结果：积极\n（此处展示情感分析效果）`
+            }
+        ];
+        let currentModel = 0;
+        function showConfig(idx) {
+            currentModel = idx;
+            document.getElementById('model-list-section').style.display = 'none';
+            document.getElementById('config-section').style.display = '';
+            document.getElementById('config-model-name').innerText = models[idx].name;
+            document.getElementById('config-model-desc').innerText = models[idx].desc;
+            document.getElementById('ai-response').innerText = '';
+            document.getElementById('user-input').value = '';
+        }
+        function backToList() {
+            document.getElementById('model-list-section').style.display = '';
+            document.getElementById('config-section').style.display = 'none';
+        }
+        document.getElementById('temperature').addEventListener('input', function() {
+            document.getElementById('temp-value').innerText = this.value;
+        });
+        async function handleSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('user-input').value.trim();
+            if (!input) {
+                document.getElementById('ai-response').innerText = '请输入内容后再提交。';
+                return false;
+            }
+            document.getElementById('ai-response').innerText = 'AI生成中，请稍候...';
+            if (currentModel === 0) {
+                // 文本生成模型，调用后端中转
+                const reply = await models[0].demo(input);
+                document.getElementById('ai-response').innerText = reply;
+            } else {
+                // 其他模型仍用模拟
+                document.getElementById('ai-response').innerText = models[currentModel].demo(input);
+            }
+            return false;
+        }
+    </script>
+</body>
+</html> 
