@@ -8,6 +8,7 @@ export default async function handler(req, res) {
 
     // 从环境变量中直接读取永久有效的API Key (它本身就是Access Token)
     const apiKey = process.env.QIANFAN_API_KEY;
+    console.log('QIANFAN_API_KEY:', process.env.QIANFAN_API_KEY);
 
     if (!apiKey) {
         return res.status(500).json({ error: 'Missing QIANFAN_API_KEY env variable' });
